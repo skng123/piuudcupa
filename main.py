@@ -8,6 +8,12 @@ connection = pymysql.connect(host=config.hostc,
                              database=config.databasec,
                              cursorclass=pymysql.cursors.DictCursor)
 
+try:
+    connection.ping()
+    logging.info("DB connection established")
+except:
+    logging.warning("DB connection issue")
+
 with connection:
     with connection.cursor() as cursor:
         # Read a single record
@@ -15,6 +21,7 @@ with connection:
         cursor.execute(sql)
         result = cursor.fetchall()
         print(result)
+        logging.info("Main worked")
         
         
 #connection.close() #unnecessary
